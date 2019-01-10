@@ -37,6 +37,36 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
+        //$socialUser = \App\User::whereEmail($request->input('email'))->whereNull('password')->first();
+        $socialUser = \App\User::socialUser($request->input('email'))->first();
+
+        if ($socialUser) {
+            return $this->updateSocialAccount($request, $socialUser);
+        }
+
+        return $this->createNativeAccount($request);
+    }
+
+    protected function updateSocialAccount(Request $request, \App\User $user)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user->update([
+            'name' => $request->input('name'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+
+        auth()->login($user);
+
+        return $this->respondCreated($user->name . '님, 환영합니다.');
+    }
+
+    public function createNativeAccount(Request $request)
+    {
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -51,13 +81,6 @@ class UsersController extends Controller
             'password' => bcrypt($request->input('password')),
             'confirm_code' => $confirmCode,
         ]);
-
-        // \Mail::send('emails.auth.confirm', compact('user'), function ($message) use ($user) {
-        //     $message->to($user->email);
-        //     $message->subject(
-        //         sprintf('[%s] 회원 가입을 확인해 주세요.', config('app.name'))
-        //     );
-        // });
 
         event(new \App\Events\UserCreated($user));
 

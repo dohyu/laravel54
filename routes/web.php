@@ -21,6 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 //
 // Route::get('docs/images/{image}', 'DocsController@image')->where('image', '[\pL-\pN\._-]+-img-[0-9]{2}.png');
 
+// Social login
+Route::get('social/{provider}', [
+    'as'   => 'social.login',
+    'uses' => 'SocialController@execute',
+]);
+
 // 사용자 가입
 Route::get('auth/register', [
     'as'   => 'users.create',

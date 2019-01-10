@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'confirm_code'
+        'name', 'email', 'password', 'confirm_code', 'activated'
     ];
 
     protected $dates = [
@@ -34,6 +34,11 @@ class User extends Authenticatable
     protected $casts = [
         'activated' => 'boolean',
     ];
+
+    public function scopeSocialUser($query, $email)
+    {
+        return $query->whereEmail($email)->whereNull('password');
+    }
 
     public function articles()
     {
