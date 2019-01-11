@@ -35,6 +35,11 @@ class User extends Authenticatable
         'activated' => 'boolean',
     ];
 
+    public function isAdmin()
+    {
+        return ($this->id === 12) ? true : false;
+    }
+
     public function scopeSocialUser($query, $email)
     {
         return $query->whereEmail($email)->whereNull('password');

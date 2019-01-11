@@ -12,9 +12,9 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-//
-// Route::resource('articles', 'ArticlesController');
-//
+
+ Route::resource('articles', 'ArticlesController');
+
 Route::get('/home', 'HomeController@index')->name('home');
 //
 // Route::get('docs/{file?}', 'DocsController@show');
