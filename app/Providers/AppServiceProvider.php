@@ -15,6 +15,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        view()->composer('*', function ($view) {
+            $allTags = \Cache::rememberForever('tags.list', function () {
+                return \App\Tag::all();
+            });
+
+            $view->with(compact('allTags'));
+        });
     }
 
     /**
