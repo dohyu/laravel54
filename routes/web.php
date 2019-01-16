@@ -14,6 +14,13 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::resource('articles', 'ArticlesController');
+Route::resource('articles.comments', 'CommentsController', ['only' => 'store']);
+
+Route::resource('comments', 'CommentsController', ['only' => ['update', 'destroy']]);
+Route::post('comments/{comment}/votes', [
+    'as'   => 'comments.vote',
+    'uses' => 'CommentsController@vote'
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 

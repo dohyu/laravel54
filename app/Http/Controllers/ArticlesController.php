@@ -24,7 +24,7 @@ class ArticlesController extends Controller
             : new \App\Article;
 
         $articles = $query->latest()->paginate(3);
-
+        
         return view('articles.index', compact('articles'));
     }
 
@@ -50,21 +50,6 @@ class ArticlesController extends Controller
     {
         $article = $request->user()->articles()->create($request->all());
 
-        if ($request->has('files')) {
-            $files = $request->input('files');
-
-            foreach ($files as $file) {
-                $filename = str_random() . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
-                $file->move(attachments_path(), $filename);
-
-                $article->attachments()->create([
-                    'filename' => $filename,
-                    'bytes' => $file->getSize(),
-                    'mime' => $file->getClientMimeType()
-                ]);
-            }
-        }
-
         if (! $article) {
             return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();
         }
@@ -84,7 +69,9 @@ class ArticlesController extends Controller
      */
     public function show(\App\Article $article)
     {
-        return view('articles.show', compact('article'));
+        $comments = $article->comments()->with('replies')->whereNull('parent_id')->latest()->get();
+
+        return view('articles.show', compact('article', 'comments'));
     }
 
     /**

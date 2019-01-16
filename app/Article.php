@@ -18,9 +18,17 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+<<<<<<< HEAD
 
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+=======
+>>>>>>> parent of 0a965ed... attachment
 }

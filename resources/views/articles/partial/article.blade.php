@@ -18,9 +18,5 @@
         @if($viewName === 'article.index')
             @include('tags.partial.list', ['tags' => $article->tags])
         @endif
-
-        @if($viewName === 'article.show')
-            @include('attachments.partial.list', ['attachments' => $article->attachments])
-        @endif
     </div>
 </div>

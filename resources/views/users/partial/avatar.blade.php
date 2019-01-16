@@ -1,5 +1,5 @@
 @php
-    $size = isset($size) ?: 48;
+    $size = isset($size) ? $size : 48;
 @endphp
 
 @if(isset($user) and $user)

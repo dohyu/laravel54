@@ -28,6 +28,11 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('articles', \App\Article::class);
+<<<<<<< HEAD
+        Route::model('attachment', \App\Attachment::class);
+        Route::model('comment', \App\Comment::class);
+=======
+>>>>>>> parent of 0a965ed... attachment
     }
 
     /**

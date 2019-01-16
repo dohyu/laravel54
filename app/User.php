@@ -45,6 +45,16 @@ class User extends Authenticatable
         return $query->whereEmail($email)->whereNull('password');
     }
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class);
