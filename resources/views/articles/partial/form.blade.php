@@ -23,7 +23,6 @@
 @section('script')
     @parent
     <script>
-<<<<<<< HEAD
         var form = $('form').first();
         var dropzone = $('div.dropzone');
         var dzControl = $('label[for=my-dropzone]>small');
@@ -124,8 +123,6 @@
             dzControl.fadeToggle(0);
         });
 
-=======
->>>>>>> parent of 0a965ed... attachment
         $("#tags").select2({
             placeholder: '태그를선택하세요(최대3개)',
             maximumSelectionLength: 3

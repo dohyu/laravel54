@@ -7,16 +7,27 @@
         </h4>
 
         <p class="text-muted meta__article">
+            By
             <a href="{{ gravatar_profile_url($article->user->email) }}">
                 <i class="fa fa-user"> {{ $article->user->name }}</i>
             </a>
+
             <small>
-                / <i class="fa fa-clock-o"> {{ $article->created_at->diffForHumans() }}</i>
+                • {{ $article->created_at->diffForHumans() }}
+                • 조회수 {{ $article->view_count }}
+
+                @if ($article->comment_count > 0)
+                    • 댓글 {{ $article->comment_count }}개
+                @endif
             </small>
         </p>
 
-        @if($viewName === 'article.index')
+        @if ($viewName === 'article.index')
             @include('tags.partial.list', ['tags' => $article->tags])
+        @endif
+
+        @if ($viewName === 'article.show')
+            @include('attachments.partial.list', ['attachments' => $article->attachments])
         @endif
     </div>
 </div>

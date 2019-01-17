@@ -9,6 +9,11 @@ class Article extends Model
     protected $with = ['user'];
     protected $fillable = ['title', 'content'];
 
+    public function getCommentCountAttribute()
+    {
+        return (int) $this->comments->count();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -18,7 +23,6 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-<<<<<<< HEAD
 
     public function attachments()
     {
@@ -29,6 +33,4 @@ class Article extends Model
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-=======
->>>>>>> parent of 0a965ed... attachment
 }

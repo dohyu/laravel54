@@ -53,7 +53,6 @@ class DatabaseSeeder extends Seeder
         if (config('database.default') !== 'sqlite') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
         }
-<<<<<<< HEAD
 
         File::cleanDirectory(attachments_path());
 
@@ -106,7 +105,5 @@ class DatabaseSeeder extends Seeder
             $comment->votes()->save(factory(App\Vote::class)->make());
         });
         $this->command->info('Seeded: votes table');
-=======
->>>>>>> parent of 0a965ed... attachment
     }
 }

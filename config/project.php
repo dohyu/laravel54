@@ -11,4 +11,8 @@ return [
         'server'  => '서버',
         'tip'     => '팁',
     ],
+    'sorting' => [
+        'view_count' => '조회수',
+        'created_at' => '작성일',
+    ],
 ];

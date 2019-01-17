@@ -37,7 +37,6 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'updated_at' => $date,
     ];
 });
-<<<<<<< HEAD
 
 $factory->define(App\Attachment::class, function (Faker\Generator $faker) {
     return [
@@ -77,5 +76,3 @@ $factory->define(App\Vote::class, function (Faker\Generator $faker) {
         },
     ];
 });
-=======
->>>>>>> parent of 0a965ed... attachment
