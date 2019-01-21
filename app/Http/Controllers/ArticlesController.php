@@ -38,28 +38,6 @@ class ArticlesController extends Controller
         return view('articles.index', compact('articles'));
     }
 
-    // public function index(Request $request, $slug = null) {
-    //
-    //     $query = $slug
-    //         ? \App\Tag::whereSlug($slug)->firstOrFail()->articles()
-    //         : new \App\Article;
-    //
-    //     $query = $query->orderBy(
-    //         $request->input('sort', 'created_at'),
-    //         $request->input('order', 'desc')
-    //     );
-    //
-    //     if ($keyword = request()->input('q')) {
-    //         $raw = 'MATCH(title,content) AGAINST(? IN BOOLEAN MODE)';
-    //         $query = $query->whereRaw($raw, [$keyword]);
-    //     }
-    //
-    //     $articles = $query->paginate(3);
-    //
-    //     return view('articles.index', compact('articles'));
-    // }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -80,12 +58,18 @@ class ArticlesController extends Controller
      */
     public function store(ArticlesRequest $request)
     {
-        $article = $request->user()->articles()->create($request->all());
+        // 글 저장
+        $payload = array_merge($request->all(), [
+            'notification' => $request->has('notification'),
+        ]);
+        $article = $request->user()->articles()->create($payload);
 
         if (! $article) {
-            return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();
+            flash()->error('작성하신 글을 저장하지 못했습니다.');
+            return back()->withInput();
         }
 
+        // 태그 싱크
         $article->tags()->sync($request->input('tags'));
 
         event(new \App\Events\ArticlesEvent($article));

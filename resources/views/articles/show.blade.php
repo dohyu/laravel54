@@ -25,7 +25,7 @@
             </article>
 
             <div class="text-right action__article">
-                @can('update', $article)
+                @can('store', $article)
                 <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-info">
                     <i class="fa fa-pencil"></i> 글 수정
                 </a>

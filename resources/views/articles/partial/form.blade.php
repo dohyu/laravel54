@@ -20,6 +20,24 @@
     {!! $errors->first('content', '<span class="form-error">:message</span>') !!}
 </div>
 
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="notification" value="{{ old('notification', $article->notification) }}">
+            댓글이 작성되면 이메일 알림 받기
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="my-dropzone">첨부파일
+        <small class="text-muted"><i class="fa fa-chevron-down"></i> 열기</small>
+        <small class="text-muted" style="display: none;"><i class="fa fa-chevron-up"></i> 닫기</small>
+    </label>
+
+    <div id="my-dropzone" class="dropzone"></div>
+</div>
+
 @section('script')
     @parent
     <script>
